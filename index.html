@@ -1,1 +1,1471 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101713">
+<title>Failoria Music</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #101713;
+    --panel: #18231c;
+    --panel2: #202d24;
+    --green: #36bd78;
+    --green-dark: #176b43;
+    --text: #f2f5f2;
+    --muted: #89968c;
+    --border: rgba(255,255,255,.07);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 245px;
+    background: #131d17;
+    border-right: 1px solid var(--border);
+    padding: 26px 17px 120px;
+    position: fixed;
+    inset: 0 auto 0 0;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0 8px 42px;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: var(--green-dark);
+    display: grid;
+    place-items: center;
+    font-size: 21px;
+}
+
+.logo-name {
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: -.5px;
+}
+
+.logo-name span {
+    color: var(--green);
+}
+
+.menu-title {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.6px;
+    margin: 25px 10px 12px;
+    text-transform: uppercase;
+}
+
+.menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    text-align: left;
+    margin-bottom: 4px;
+    transition: .2s;
+    font-size: 14px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: var(--panel2);
+    color: white;
+}
+
+.menu-item.active {
+    color: var(--green);
+}
+
+.menu-icon {
+    width: 21px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.sidebar-bottom {
+    margin-top: 35px;
+    padding: 15px;
+    border-radius: 12px;
+    background: var(--panel);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.sidebar-bottom strong {
+    color: var(--green);
+}
+
+/* MAIN */
+
+.main {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    padding: 28px 38px 150px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.search {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    width: min(370px, 65%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+    font-size: 14px;
+}
+
+.search input::placeholder {
+    color: var(--muted);
+}
+
+.profile {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 275px;
+    padding: 37px;
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 80% 20%, rgba(60,170,100,.22), transparent 35%),
+        linear-gradient(115deg, #1c3827, #111c15 75%);
+    border: 1px solid rgba(75,160,100,.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-text {
+    max-width: 490px;
+    z-index: 1;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 17px;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 5vw, 47px);
+    margin-bottom: 12px;
+    letter-spacing: -1.5px;
+}
+
+.hero p {
+    color: #a8b7ab;
+    line-height: 1.6;
+    font-size: 14px;
+    margin-bottom: 23px;
+}
+
+.primary-button {
+    background: var(--green);
+    color: #102016;
+    padding: 12px 22px;
+    border-radius: 9px;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.primary-button:hover {
+    background: #54d993;
+    transform: translateY(-2px);
+}
+
+.hero-art {
+    width: 185px;
+    height: 185px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, #243b2a 0 15%, #17291c 16% 27%,
+        #0c1710 28% 45%, #263e2b 46% 47%, #101a13 48%);
+    border: 1px solid rgba(255,255,255,.12);
+    display: grid;
+    place-items: center;
+    font-size: 62px;
+    box-shadow: 0 0 65px rgba(55,180,100,.13);
+}
+
+/* SECTIONS */
+
+.section {
+    margin-top: 42px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 19px;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+}
+
+.section-heading button {
+    background: transparent;
+    color: var(--green);
+    font-size: 13px;
+}
+
+.albums {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.album {
+    background: transparent;
+    border-radius: 12px;
+    padding: 11px;
+    cursor: pointer;
+    transition: .2s;
+    min-width: 0;
+}
+
+.album:hover {
+    background: var(--panel);
+    transform: translateY(-3px);
+}
+
+.cover {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 13px;
+}
+
+.cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,.4));
+}
+
+.cover-symbol {
+    font-size: clamp(35px, 5vw, 65px);
+    z-index: 1;
+    text-shadow: 0 5px 20px rgba(0,0,0,.5);
+}
+
+.cover-blood {
+    background: linear-gradient(145deg, #641b1b, #1c0b0c 70%);
+}
+
+.cover-sun {
+    background: linear-gradient(145deg, #d47a26, #632b19 65%, #17110c);
+}
+
+.cover-night {
+    background: linear-gradient(145deg, #293d5b, #101522 70%);
+}
+
+.cover-45 {
+    background: linear-gradient(145deg, #4c5047, #171d18 70%);
+}
+
+.album h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.album p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* TRACKS */
+
+.track-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.track {
+    display: grid;
+    grid-template-columns: 35px 1fr 40px;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 13px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.track:hover {
+    background: var(--panel);
+}
+
+.track.playing {
+    background: rgba(54,189,120,.09);
+}
+
+.track-number {
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+}
+
+.track-name {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.track-artist {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.track-duration {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: right;
+}
+
+/* PLAYER */
+
+.player {
+    position: fixed;
+    bottom: 0;
+    left: 245px;
+    right: 0;
+    height: 92px;
+    background: rgba(20,30,23,.97);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 25px;
+    z-index: 20;
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.mini-cover {
+    width: 49px;
+    height: 49px;
+    border-radius: 7px;
+    background: linear-gradient(145deg,#6c2d25,#172018);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 21px;
+}
+
+.now-info {
+    min-width: 0;
+}
+
+.now-info strong,
+.now-info span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.now-info strong {
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.now-info span {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.favorite-button {
+    background: transparent;
+    color: var(--muted);
+    font-size: 20px;
+    padding: 5px;
+}
+
+.favorite-button.liked {
+    color: var(--green);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.control-buttons button {
+    background: transparent;
+    color: #aab5ac;
+    font-size: 17px;
+}
+
+.control-buttons button:hover,
+.control-buttons button.selected {
+    color: var(--green);
+}
+
+.play-button {
+    background: var(--green) !important;
+    color: #101713 !important;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 15px !important;
+}
+
+.progress-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 10px;
+    color: var(--muted);
+}
+
+input[type="range"] {
+    accent-color: var(--green);
+    cursor: pointer;
+}
+
+.progress {
+    flex: 1;
+    min-width: 0;
+    height: 4px;
+}
+
+.volume-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    color: var(--muted);
+}
+
+.volume {
+    width: 90px;
+}
+
+.mobile-menu {
+    display: none;
+    background: transparent;
+    font-size: 23px;
+}
+
+/* FOOTER */
+
+.empty-message {
+    display: none;
+    color: var(--muted);
+    padding: 30px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 950px) {
+    .albums {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main {
+        padding: 25px 22px 140px;
+    }
+
+    .player {
+        padding: 10px 15px;
+        grid-template-columns: 1fr 1.3fr;
+    }
+
+    .volume-area {
+        display: none;
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        display: none;
+        width: 260px;
+        box-shadow: 10px 0 40px rgba(0,0,0,.4);
+    }
+
+    .sidebar.open {
+        display: block;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 17px 15px 125px;
+    }
+
+    .topbar {
+        margin-bottom: 22px;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .profile {
+        display: none;
+    }
+
+    .hero {
+        padding: 25px 21px;
+        min-height: 230px;
+    }
+
+    .hero-art {
+        width: 95px;
+        height: 95px;
+        font-size: 34px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+
+    .hero p {
+        font-size: 12px;
+    }
+
+    .albums {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .section {
+        margin-top: 30px;
+    }
+
+    .player {
+        left: 0;
+        right: 0;
+        height: 105px;
+        padding: 9px 12px;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+
+    .mini-cover {
+        width: 40px;
+        height: 40px;
+    }
+
+    .now-info strong {
+        font-size: 11px;
+    }
+
+    .now-info span {
+        font-size: 10px;
+    }
+
+    .control-buttons {
+        gap: 12px;
+    }
+
+    .progress-row {
+        gap: 5px;
+    }
+
+    .volume-area {
+        display: none;
+    }
+
+    .controls {
+        gap: 6px;
+    }
+}
+
+@media(max-width: 370px) {
+    .hero-art {
+        display: none;
+    }
+
+    .control-buttons {
+        gap: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">♫</div>
+        <div class="logo-name">Failoria <span>Music</span></div>
+    </div>
+
+    <div class="menu-title">Медиатека</div>
+
+    <button class="menu-item active" data-section="home">
+        <span class="menu-icon">⌂</span>
+        Главная
+    </button>
+
+    <button class="menu-item" data-section="songs">
+        <span class="menu-icon">♫</span>
+        Все песни
+    </button>
+
+    <button class="menu-item" data-section="albums">
+        <span class="menu-icon">▣</span>
+        Альбомы
+    </button>
+
+    <button class="menu-item" data-section="favorites">
+        <span class="menu-icon">♡</span>
+        Избранное
+    </button>
+
+    <div class="menu-title">Коллекция</div>
+
+    <button class="menu-item" data-section="artist">
+        <span class="menu-icon">♟</span>
+        Виктор Цой
+    </button>
+
+    <div class="sidebar-bottom">
+        <strong>FAILORIA MUSIC</strong><br>
+        Музыка, которая остаётся.<br>
+        Посвящение Виктору Цою.
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+
+        <div class="search">
+            <span>⌕</span>
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Поиск песен и альбомов..."
+            >
+        </div>
+
+        <button class="profile" id="profileButton">
+            ◉ Failoria ID
+        </button>
+
+    </div>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-text">
+            <div class="eyebrow">Музыкальная коллекция</div>
+
+            <h1>Виктор Цой</h1>
+
+            <p>
+                Музыка, ставшая частью истории.
+                Песни, которые продолжают звучать.
+            </p>
+
+            <button class="primary-button" id="heroPlay">
+                ▶ Слушать музыку
+            </button>
+        </div>
+
+        <div class="hero-art">♫</div>
+
+    </section>
+
+    <!-- ALBUMS -->
+
+    <section class="section" id="albumsSection">
+
+        <div class="section-heading">
+            <h2>Альбомы</h2>
+            <button data-section="albums">Все альбомы →</button>
+        </div>
+
+        <div class="albums" id="albumGrid">
+
+            <article class="album" data-album="Группа крови">
+                <div class="cover cover-blood">
+                    <span class="cover-symbol">КИНО</span>
+                </div>
+                <h3>Группа крови</h3>
+                <p>1988 · Кино</p>
+            </article>
+
+            <article class="album" data-album="Звезда по имени Солнце">
+                <div class="cover cover-sun">
+                    <span class="cover-symbol">☀</span>
+                </div>
+                <h3>Звезда по имени Солнце</h3>
+                <p>1989 · Кино</p>
+            </article>
+
+            <article class="album" data-album="Ночь">
+                <div class="cover cover-night">
+                    <span class="cover-symbol">НОЧЬ</span>
+                </div>
+                <h3>Ночь</h3>
+                <p>1986 · Кино</p>
+            </article>
+
+            <article class="album" data-album="45">
+                <div class="cover cover-45">
+                    <span class="cover-symbol">45</span>
+                </div>
+                <h3>45</h3>
+                <p>1982 · Кино</p>
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- SONGS -->
+
+    <section class="section" id="songsSection">
+
+        <div class="section-heading">
+            <h2 id="songsTitle">Популярные песни</h2>
+            <button id="showAll">Все песни →</button>
+        </div>
+
+        <div class="track-list" id="trackList"></div>
+
+        <div class="empty-message" id="emptyMessage">
+            Ничего не найдено.
+        </div>
+
+    </section>
+
+    <!-- ARTIST -->
+
+    <section class="section" id="artistSection">
+
+        <div class="section-heading">
+            <h2>Об исполнителе</h2>
+        </div>
+
+        <div style="
+            background:var(--panel);
+            padding:22px;
+            border-radius:13px;
+            display:flex;
+            gap:18px;
+            align-items:center;
+        ">
+
+            <div style="
+                width:65px;
+                height:65px;
+                flex-shrink:0;
+                border-radius:50%;
+                background:linear-gradient(145deg,#315c3b,#111b14);
+                display:grid;
+                place-items:center;
+                font-size:27px;
+            ">♫</div>
+
+            <div>
+                <h3 style="margin-bottom:7px">Виктор Цой</h3>
+                <p style="
+                    color:var(--muted);
+                    font-size:13px;
+                    line-height:1.6;
+                ">
+                    Советский рок-музыкант, автор песен,
+                    лидер группы «Кино».
+                    1962–1990.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</div>
+
+<!-- AUDIO PLAYER -->
+
+<footer class="player">
+
+    <div class="now-playing">
+
+        <div class="mini-cover" id="miniCover">♫</div>
+
+        <div class="now-info">
+            <strong id="currentTitle">Выберите песню</strong>
+            <span id="currentArtist">Виктор Цой · Кино</span>
+        </div>
+
+        <button class="favorite-button" id="playerFavorite">♡</button>
+
+    </div>
+
+    <div class="controls">
+
+        <div class="control-buttons">
+
+            <button id="shuffleButton" title="Перемешать">⤨</button>
+
+            <button id="prevButton" title="Предыдущая">◀◀</button>
+
+            <button class="play-button" id="playButton" title="Воспроизвести">
+                ▶
+            </button>
+
+            <button id="nextButton" title="Следующая">▶▶</button>
+
+            <button id="repeatButton" title="Повтор">↻</button>
+
+        </div>
+
+        <div class="progress-row">
+
+            <span id="currentTime">0:00</span>
+
+            <input
+                class="progress"
+                id="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+            >
+
+            <span id="duration">0:00</span>
+
+        </div>
+
+    </div>
+
+    <div class="volume-area">
+        <span>♫</span>
+        <input
+            class="volume"
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.7"
+        >
+    </div>
+
+</footer>
+
+<audio id="audio"></audio>
+
+<script>
+
+// =====================================
+// FAILORIA MUSIC
+// ОСНОВНЫЕ ДАННЫЕ
+// =====================================
+
+const songs = [
+    {
+        title: "Группа крови",
+        album: "Группа крови",
+        duration: "4:45",
+        audio: "audio/gruppa-krovi.mp3"
+    },
+    {
+        title: "Закрой за мной дверь, я ухожу",
+        album: "Группа крови",
+        duration: "4:16",
+        audio: "audio/zakroy-za-mnoy-dver.mp3"
+    },
+    {
+        title: "Спокойная ночь",
+        album: "Группа крови",
+        duration: "6:09",
+        audio: "audio/spokoynaya-noch.mp3"
+    },
+    {
+        title: "Война",
+        album: "Группа крови",
+        duration: "4:04",
+        audio: "audio/voyna.mp3"
+    },
+    {
+        title: "Звезда по имени Солнце",
+        album: "Звезда по имени Солнце",
+        duration: "3:45",
+        audio: "audio/zvezda-po-imeni-solntse.mp3"
+    },
+    {
+        title: "Пачка сигарет",
+        album: "Звезда по имени Солнце",
+        duration: "4:28",
+        audio: "audio/pachka-sigaret.mp3"
+    },
+    {
+        title: "Кукушка",
+        album: "Звезда по имени Солнце",
+        duration: "6:40",
+        audio: "audio/kukushka.mp3"
+    },
+    {
+        title: "Последний герой",
+        album: "Ночь",
+        duration: "3:08",
+        audio: "audio/posledniy-geroy.mp3"
+    },
+    {
+        title: "Мама, мы все сошли с ума",
+        album: "Ночь",
+        duration: "4:05",
+        audio: "audio/mama.mp3"
+    },
+    {
+        title: "Восьмиклассница",
+        album: "45",
+        duration: "2:46",
+        audio: "audio/vosmiklаssnica.mp3"
+    },
+    {
+        title: "Алюминиевые огурцы",
+        album: "45",
+        duration: "2:55",
+        audio: "audio/alyuminievye-ogurtsy.mp3"
+    }
+];
+
+// =====================================
+// ЭЛЕМЕНТЫ
+// =====================================
+
+const audio = document.getElementById("audio");
+
+const trackList = document.getElementById("trackList");
+const currentTitle = document.getElementById("currentTitle");
+const currentArtist = document.getElementById("currentArtist");
+
+const playButton = document.getElementById("playButton");
+const progress = document.getElementById("progress");
+
+const currentTime = document.getElementById("currentTime");
+const duration = document.getElementById("duration");
+
+const playerFavorite = document.getElementById("playerFavorite");
+
+let currentIndex = -1;
+let isPlaying = false;
+let isShuffle = false;
+let isRepeat = false;
+
+let favorites = [];
+
+let visibleSongs = [...songs];
+
+// =====================================
+// ВРЕМЯ
+// =====================================
+
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00";
+
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+
+    return minutes + ":" + String(secs).padStart(2, "0");
+}
+
+// =====================================
+// ОТОБРАЖЕНИЕ ПЕСЕН
+// =====================================
+
+function renderSongs(list = songs) {
+    visibleSongs = list;
+    trackList.innerHTML = "";
+
+    document.getElementById("emptyMessage").style.display =
+        list.length === 0 ? "block" : "none";
+
+    list.forEach((song, index) => {
+        const originalIndex = songs.indexOf(song);
+
+        const track = document.createElement("div");
+        track.className = "track";
+
+        if (originalIndex === currentIndex) {
+            track.classList.add("playing");
+        }
+
+        const number = document.createElement("div");
+        number.className = "track-number";
+        number.textContent = index + 1;
+
+        const info = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "track-name";
+        name.textContent = song.title;
+
+        const artist = document.createElement("div");
+        artist.className = "track-artist";
+        artist.textContent = "Кино";
+
+        info.append(name, artist);
+
+        const time = document.createElement("div");
+        time.className = "track-duration";
+        time.textContent = song.duration;
+
+        track.append(number, info, time);
+
+        track.addEventListener("click", () => {
+            playSong(originalIndex);
+        });
+
+        trackList.appendChild(track);
+    });
+}
+
+// =====================================
+// ВЫБОР ПЕСНИ
+// =====================================
+
+function playSong(index) {
+    if (index < 0 || index >= songs.length) return;
+
+    currentIndex = index;
+
+    const song = songs[currentIndex];
+
+    audio.src = song.audio;
+
+    currentTitle.textContent = song.title;
+    currentArtist.textContent = "Кино · " + song.album;
+
+    document.getElementById("miniCover").textContent = "♫";
+
+    audio.load();
+
+    audio.play().then(() => {
+        isPlaying = true;
+        updatePlayButton();
+    }).catch(() => {
+        isPlaying = false;
+        updatePlayButton();
+
+        alert("Не удалось воспроизвести аудиофайл: " + song.audio);
+    });
+
+    updateFavoriteButton();
+    renderSongs(visibleSongs);
+}
+
+// =====================================
+// PLAY / PAUSE
+// =====================================
+
+function togglePlay() {
+    if (currentIndex === -1) {
+        playSong(0);
+        return;
+    }
+
+    if (audio.paused) {
+        audio.play().then(() => {
+            isPlaying = true;
+            updatePlayButton();
+        }).catch(() => {});
+    } else {
+        audio.pause();
+        isPlaying = false;
+        updatePlayButton();
+    }
+}
+
+function updatePlayButton() {
+    playButton.textContent = isPlaying ? "Ⅱ" : "▶";
+}
+
+playButton.addEventListener("click", togglePlay);
+
+document.getElementById("heroPlay").addEventListener("click", () => {
+    if (currentIndex === -1) {
+        playSong(0);
+    } else {
+        togglePlay();
+    }
+});
+
+// =====================================
+// СЛЕДУЮЩАЯ И ПРЕДЫДУЩАЯ
+// =====================================
+
+function nextSong() {
+    if (isShuffle && songs.length > 1) {
+        let next;
+
+        do {
+            next = Math.floor(Math.random() * songs.length);
+        } while (next === currentIndex);
+
+        playSong(next);
+    } else {
+        playSong((currentIndex + 1) % songs.length);
+    }
+}
+
+function previousSong() {
+    if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+        return;
+    }
+
+    const index = currentIndex <= 0
+        ? songs.length - 1
+        : currentIndex - 1;
+
+    playSong(index);
+}
+
+document.getElementById("nextButton")
+    .addEventListener("click", nextSong);
+
+document.getElementById("prevButton")
+    .addEventListener("click", previousSong);
+
+// =====================================
+// ПЕРЕМЕШИВАНИЕ И ПОВТОР
+// =====================================
+
+const shuffleButton = document.getElementById("shuffleButton");
+const repeatButton = document.getElementById("repeatButton");
+
+shuffleButton.addEventListener("click", () => {
+    isShuffle = !isShuffle;
+    shuffleButton.classList.toggle("selected", isShuffle);
+});
+
+repeatButton.addEventListener("click", () => {
+    isRepeat = !isRepeat;
+    repeatButton.classList.toggle("selected", isRepeat);
+    audio.loop = isRepeat;
+});
+
+// =====================================
+// ПРОГРЕСС
+// =====================================
+
+audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+
+    progress.value = (audio.currentTime / audio.duration) * 100;
+
+    currentTime.textContent = formatTime(audio.currentTime);
+    duration.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    duration.textContent = formatTime(audio.duration);
+});
+
+progress.addEventListener("input", () => {
+    if (!audio.duration) return;
+
+    audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
+audio.addEventListener("ended", () => {
+    if (!isRepeat) nextSong();
+});
+
+audio.addEventListener("pause", () => {
+    isPlaying = false;
+    updatePlayButton();
+});
+
+audio.addEventListener("play", () => {
+    isPlaying = true;
+    updatePlayButton();
+});
+
+// =====================================
+// ГРОМКОСТЬ
+// =====================================
+
+document.getElementById("volume").addEventListener("input", (e) => {
+    audio.volume = Number(e.target.value);
+});
+
+audio.volume = 0.7;
+
+// =====================================
+// ИЗБРАННОЕ
+// =====================================
+
+function toggleFavorite(index) {
+    if (index < 0) return;
+
+    if (favorites.includes(index)) {
+        favorites = favorites.filter(i => i !== index);
+    } else {
+        favorites.push(index);
+    }
+
+    updateFavoriteButton();
+
+    if (
+        document.querySelector('[data-section="favorites"]')
+            .classList.contains("active")
+    ) {
+        renderSongs(favorites.map(i => songs[i]));
+    }
+}
+
+function updateFavoriteButton() {
+    const liked = favorites.includes(currentIndex);
+
+    playerFavorite.textContent = liked ? "♥" : "♡";
+    playerFavorite.classList.toggle("liked", liked);
+}
+
+playerFavorite.addEventListener("click", () => {
+    toggleFavorite(currentIndex);
+});
+
+// =====================================
+// ПОИСК
+// =====================================
+
+document.getElementById("searchInput")
+    .addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+
+        const results = songs.filter(song =>
+            song.title.toLowerCase().includes(query) ||
+            song.album.toLowerCase().includes(query)
+        );
+
+        document.getElementById("songsTitle").textContent =
+            query ? "Результаты поиска" : "Популярные песни";
+
+        renderSongs(results);
+    });
+
+// =====================================
+// АЛЬБОМЫ
+// =====================================
+
+document.querySelectorAll(".album").forEach(album => {
+    album.addEventListener("click", () => {
+        const name = album.dataset.album;
+
+        const results = songs.filter(song => song.album === name);
+
+        document.getElementById("songsTitle").textContent = name;
+
+        renderSongs(results);
+
+        document.getElementById("songsSection")
+            .scrollIntoView({ behavior: "smooth" });
+    });
+});
+
+// =====================================
+// МЕНЮ
+// =====================================
+
+document.querySelectorAll("[data-section]").forEach(button => {
+    button.addEventListener("click", () => {
+        const section = button.dataset.section;
+
+        document.querySelectorAll(".menu-item").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        const active = document.querySelector(
+            `.menu-item[data-section="${section}"]`
+        );
+
+        if (active) active.classList.add("active");
+
+        if (section === "songs" || section === "home") {
+            document.getElementById("songsTitle").textContent =
+                section === "songs" ? "Все песни" : "Популярные песни";
+
+            renderSongs(songs);
+        }
+
+        if (section === "albums") {
+            document.getElementById("albumsSection")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        if (section === "favorites") {
+            document.getElementById("songsTitle").textContent = "Избранное";
+            renderSongs(favorites.map(i => songs[i]));
+
+            document.getElementById("songsSection")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        if (section === "artist") {
+            document.getElementById("artistSection")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+        if (section === "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.getElementById("sidebar").classList.remove("open");
+    });
+});
+
+// =====================================
+// ПОКАЗАТЬ ВСЕ ПЕСНИ
+// =====================================
+
+document.getElementById("showAll").addEventListener("click", () => {
+    document.getElementById("songsTitle").textContent = "Все песни";
+    renderSongs(songs);
+});
+
+// =====================================
+// МОБИЛЬНОЕ МЕНЮ
+// =====================================
+
+document.getElementById("mobileMenu").addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("open");
+});
+
+// =====================================
+// FAILORIA ID
+// =====================================
+
+document.getElementById("profileButton")
+    .addEventListener("click", () => {
+        alert(
+            "Failoria ID\n\n" +
+            "Подключение единого аккаунта будет добавлено следующим этапом."
+        );
+    });
+
+// =====================================
+// ЗАПУСК
+// =====================================
+
+renderSongs();
+  </script>
+</body>
+</html>
